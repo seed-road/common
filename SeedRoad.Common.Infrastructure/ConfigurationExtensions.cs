@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace SeedRoad.Kernel.Infrastructure.Common;
+namespace SeedRoad.Common.Infrastructure;
 
 public static class ConfigurationExtensions
 {
