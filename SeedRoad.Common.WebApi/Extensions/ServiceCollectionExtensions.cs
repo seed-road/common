@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
+using NSwag;
 using SeedRoad.Common.WebApi.ErrorHandling;
 
 namespace SeedRoad.Common.WebApi.Extensions;
@@ -44,9 +45,24 @@ public static class ServiceCollectionExtensions
         {
             services.AddSwaggerDocument((settings, serviceProvider) =>
             {
-                // var fluentValidationSchemaProcessor = serviceProvider.GetService<FluentValidationSchemaProcessor>();
-                // Add the fluent validations schema processor
-                // settings.SchemaProcessors.Add(fluentValidationSchemaProcessor);
+
+                settings.AddSecurity("bearer", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.OAuth2,
+                    Description = "TheCodeBuzz OAuth2 Service",
+                    Flows = new OpenApiOAuthFlows()
+                    {
+                        AuthorizationCode = new OpenApiOAuthFlow()
+                        {
+                            Scopes = new Dictionary<string, string>
+                            {
+                                { "api1", "API1" },
+                            },
+                            AuthorizationUrl = "https://localhost:5001/connect/authorize",
+                            TokenUrl = "https://localhost:5001/connect/token"
+                        },
+                    }
+                });
                 settings.PostProcess = document =>
                 {
                     document.Info.Version = apiVersionDescription.ApiVersion.ToString();
