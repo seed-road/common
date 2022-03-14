@@ -37,6 +37,11 @@ public class HateoasResponseBuilder : IHateoasResponseBuilder
         return GeneratePageResponse(urlHelper, page, values, routeName, valuesDic);
     }
 
+    public HateoasResponse<T> ToEntityResponse<T>(T entity, IList<LinkDto> entityLinks)
+    {
+        return new HateoasResponse<T>(entity, entityLinks);
+    }
+
 
     public static HateoasResponseBuilder Default(string pageParam = DefaultPageQueryParam,
         string sizeParam = DefaultSizeQueryParam)
