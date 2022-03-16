@@ -1,6 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using SeedRoad.Common.Application.Contracts;
+using SeedRoad.Common.Core.Application.Contracts;
 using SeedRoad.Common.System;
 
 namespace SeedRoad.Common.Infrastructure;

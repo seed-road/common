@@ -13,20 +13,20 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
         private readonly IConnection _connection;
         private readonly RoutingConfiguration _routingConfiguration;
         private readonly IMessageProcessor<TEvent> _messageProcessor;
-        protected readonly ILogger<RabbitMqListener<TEvent>> Logger;
+        private readonly ILogger<RabbitMqListener<TEvent>> _logger;
 
 
-        public RabbitMqListener(RabbitMqConfiguration configuration, RoutingConfiguration routingConfiguration,
+        public RabbitMqListener(IRabbitMqConfiguration configuration, RoutingConfiguration routingConfiguration,
             IMessageProcessor<TEvent> messageProcessor,
             ILogger<RabbitMqListener<TEvent>> logger)
         {
             _routingConfiguration = routingConfiguration;
             _messageProcessor = messageProcessor;
-            Logger = logger;
+            _logger = logger;
 
             try
             {
-                Logger.LogDebug(
+                _logger.LogDebug(
                     "RabbitMqListener connecting to host :  {Host}, password: {Password}, username: {Username}, port: {Port}",
                     configuration.Host, configuration.Password, configuration.Username, configuration.Port);
                 var factory = new ConnectionFactory
@@ -38,7 +38,7 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
             }
             catch (Exception ex)
             {
-                Logger.LogError("RabbitListener init error,ex:{Error}", ex.Message);
+                _logger.LogError("RabbitListener init error,ex:{Error}", ex.Message);
                 throw;
             }
         }
@@ -65,7 +65,7 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
             {
                 _channel.ExchangeDeclare(_routingConfiguration.Exchange, ExchangeType.Topic);
                 var queueName = _channel.QueueDeclare().QueueName;
-                Logger.LogInformation(
+                _logger.LogInformation(
                     "RabbitListener register, exchange: {Exchange}, routeKey:{RoutingKey}, queueName {QueueName}",
                     _routingConfiguration.Exchange, _routingConfiguration.RoutingKey, queueName);
 
@@ -88,7 +88,7 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
             }
             catch (Exception exception)
             {
-                Logger.LogError("RabbitMQ error:{Error}", exception.Message);
+                _logger.LogError("RabbitMQ error:{Error}", exception.Message);
             }
         }
 

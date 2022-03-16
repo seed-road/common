@@ -10,6 +10,11 @@ public static class ObjectExtensions
         return Activator.CreateInstance(genericDispatcherType, obj);
     }
 
+    public static Task<T> ToTask<T>(this T obj)
+    {
+        return Task.FromResult<T>(obj);
+    }
+
     public static IDictionary<string, T> ToDictionary<T>(this object? source)
     {
         var dictionary = new Dictionary<string, T>();

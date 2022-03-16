@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Remove="Class1.cs"/>
+        <Compile Remove="Class1.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -18,8 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\SeedRoad.Common.Application\SeedRoad.Common.Application.csproj"/>
-        <ProjectReference Include="..\SeedRoad.Common.System\SeedRoad.Common.System.csproj"/>
+        <ProjectReference Include="..\SeedRoad.Common.Core.Application\SeedRoad.Common.Core.Application.csproj" />
+        <ProjectReference Include="..\SeedRoad.Common.System\SeedRoad.Common.System.csproj" />
     </ItemGroup>
 
 </Project>

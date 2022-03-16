@@ -6,15 +6,17 @@ using SeedRoad.Common.Messaging.Configurations;
 
 namespace SeedRoad.Common.Infrastructure.Messaging.Services
 {
-    public class DispatcherService<TMessage> : IDispatcherService
+    public class DispatcherService : IDispatcherService
     {
         private readonly IModel? _channel;
 
-        private readonly ILogger<DispatcherService<TMessage>> _logger;
+        private readonly ILogger<DispatcherService> _logger;
 
-        public DispatcherService(RabbitMqConfiguration configuration,
-            ILogger<DispatcherService<TMessage>> logger)
+        public DispatcherService(IRabbitMqConfiguration configuration,
+            ILogger<DispatcherService> logger)
         {
+            _logger = logger;
+
             try
             {
                 var factory = new ConnectionFactory
@@ -29,7 +31,6 @@ namespace SeedRoad.Common.Infrastructure.Messaging.Services
                 logger.LogError(-1, ex, "RabbitMQClient init fail");
             }
 
-            _logger = logger;
         }
 
         public void PushMessage(object message, string exchange, string routingKey)

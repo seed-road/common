@@ -7,10 +7,10 @@ namespace SeedRoad.Common.Infrastructure.Messaging.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCommonDispatchService(this IServiceCollection serviceCollection,
-        RabbitMqConfiguration configuration)
+        IRabbitMqConfiguration configuration)
     {
         return serviceCollection.AddSingleton(configuration)
-            .AddScoped<IDispatcherService>();
+            .AddScoped<IDispatcherService, DispatcherService>();
     }
 
     public static IServiceCollection AddCommonDispatcher<TMessage>(this IServiceCollection serviceCollection, RoutingConfiguration routingConfiguration)
