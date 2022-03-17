@@ -1,6 +1,4 @@
-using SeedRoad.Common.Core.Domain.Contracts;
-
-namespace SeedRoad.Common.Core.Application.Contracts;
+namespace SeedRoad.Common.Core.Domain.Contracts;
 
 public interface IAggregateRepository<TId, TAggregate> where TAggregate : Aggregate<TId> where TId : IEntityId
 {
