@@ -1,5 +1,4 @@
-﻿using SeedRoad.Common.Core.Application.Contracts;
-using SeedRoad.Common.Core.Domain.Events;
+﻿using SeedRoad.Common.Core.Domain.Events;
 using SeedRoad.Common.Infrastructure.Messaging.Exceptions;
 using SeedRoad.Common.Messaging.Configurations;
 
