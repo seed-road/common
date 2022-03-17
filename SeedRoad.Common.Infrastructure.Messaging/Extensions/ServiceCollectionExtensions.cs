@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection.AddScoped(provider =>
         {
             var dispatcherService = provider.GetRequiredService<IDispatcherService>();
-            return new Dispatcher<TMessage>(dispatcherService, routingConfiguration);
+            return new EventDispatcher<TMessage>(dispatcherService, routingConfiguration);
         });
     }
 }
