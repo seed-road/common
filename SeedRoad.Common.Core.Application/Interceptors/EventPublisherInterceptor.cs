@@ -48,12 +48,12 @@ public class EventPublisherInterceptor : IInterceptor
     {
         return invocationType.GetInterfaces().Any(interfaceType =>
             interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition()
-                .IsAssignableFrom(typeof(IAggregateDtoRepository<,,>))
+                .IsAssignableFrom(typeof(IAggregateRepository<,,>))
         );
     }
 
     private bool IsSetAsyncMethod(MethodInfo methodInfo)
     {
-        return methodInfo.Name == nameof(IAggregateDtoRepository<object, IAggregateDto, object>.SetAsync);
+        return methodInfo.Name == nameof(IAggregateRepository<object, IAggregateDto, object>.SetAsync);
     }
 }

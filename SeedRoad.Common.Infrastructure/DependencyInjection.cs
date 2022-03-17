@@ -21,9 +21,9 @@ public static class DependencyInjection
         {
             foreach (Type type in assembly.GetTypes())
             {
-                if (typeof(IAggregateDtoRepository<,,>).IsAssignableFrom(type))
+                if (typeof(IAggregateRepository<,,>).IsAssignableFrom(type))
                 {
-                    serviceCollection.AddScoped(typeof(IAggregateDtoRepository<,,>), type);
+                    serviceCollection.AddScoped(typeof(IAggregateRepository<,,>), type);
                 }
             }
         }
