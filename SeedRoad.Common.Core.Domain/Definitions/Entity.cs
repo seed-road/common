@@ -1,4 +1,4 @@
-namespace SeedRoad.Common.Core.Domain.Contracts;
+namespace SeedRoad.Common.Core.Domain.Definitions;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId : IEntityId
 {

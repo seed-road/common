@@ -1,10 +1,9 @@
 using System.Reflection;
 using Castle.DynamicProxy;
 using Microsoft.Extensions.Logging;
-using SeedRoad.Common.Core.Application.Contracts;
 using SeedRoad.Common.Core.Application.Extensions;
 using SeedRoad.Common.Core.Application.Notifications;
-using SeedRoad.Common.Core.Domain.Contracts;
+using SeedRoad.Common.Core.Domain.Definitions;
 using SeedRoad.Common.Core.Domain.Events;
 using SeedRoad.Common.System;
 
@@ -35,26 +34,26 @@ public class EventPublisherInterceptor : IInterceptor
             return;
         }
 
-        var aggregate = invocation.Arguments.First() as IAggregate;
-        foreach (IDomainEvent aggregateEvent in aggregate.Events.ToList())
+        var dto = invocation.Arguments.First() as IAggregateDto;
+        foreach (IDomainEvent aggregateEvent in dto.Events.ToList())
         {
             var notification = aggregateEvent.ToGenericType(typeof(DomainEventNotification<>));
             _serviceProvider.FireNotificationAndForget(notification, _logger);
         }
 
-        aggregate.ClearEvents();
+        dto.ClearEvents();
     }
 
     private bool IsAggregateRepository(Type invocationType)
     {
         return invocationType.GetInterfaces().Any(interfaceType =>
             interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition()
-                .IsAssignableFrom(typeof(IAggregateRepository<,>))
+                .IsAssignableFrom(typeof(IAggregateDtoRepository<,,>))
         );
     }
 
     private bool IsSetAsyncMethod(MethodInfo methodInfo)
     {
-        return methodInfo.Name == nameof(IAggregateRepository<IEntityId, Aggregate<IEntityId>>.SetAsync);
+        return methodInfo.Name == nameof(IAggregateDtoRepository<object, IAggregateDto, object>.SetAsync);
     }
 }

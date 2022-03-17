@@ -1,7 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using SeedRoad.Common.Core.Application.Contracts;
-using SeedRoad.Common.Core.Domain.Contracts;
+using SeedRoad.Common.Core.Domain.Definitions;
 using SeedRoad.Common.System;
 
 namespace SeedRoad.Common.Infrastructure;
@@ -22,9 +21,9 @@ public static class DependencyInjection
         {
             foreach (Type type in assembly.GetTypes())
             {
-                if (typeof(IAggregateRepository<,>).IsAssignableFrom(type))
+                if (typeof(IAggregateDtoRepository<,,>).IsAssignableFrom(type))
                 {
-                    serviceCollection.AddScoped(typeof(IAggregateRepository<,>), type);
+                    serviceCollection.AddScoped(typeof(IAggregateDtoRepository<,,>), type);
                 }
             }
         }

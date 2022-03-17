@@ -1,6 +1,6 @@
 using SeedRoad.Common.Core.Domain.Events;
 
-namespace SeedRoad.Common.Core.Domain.Contracts;
+namespace SeedRoad.Common.Core.Domain.Definitions;
 
 public interface IAggregate
 {
