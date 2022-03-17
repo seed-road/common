@@ -2,7 +2,7 @@
 
 namespace SeedRoad.Common.Core.Domain.Exceptions;
 
-public class ExceptionsAggregate : Exception, IEnumerable<ISubstantiateException>, IApplicationException
+public class ExceptionsAggregate : Exception, IEnumerable<ISubstantiateException>, IDomainException
 {
     public ExceptionsAggregate(IEnumerable<ISubstantiateException> exceptions)
     {

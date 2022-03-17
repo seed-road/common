@@ -1,6 +1,6 @@
 ﻿using SeedRoad.Common.Core.Domain.Exceptions;
 
-namespace SeedRoad.Common.Core.Application.Exceptions;
+namespace SeedRoad.Common.Core.Domain.Exceptions;
 
 public class NotFoundException<TId, TEntity> : Exception, ISubstantiateException
 {

@@ -30,7 +30,7 @@ public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior
         }
         catch (Exception exception)
         {
-            if (exception is not IApplicationException)
+            if (exception is not IDomainException)
             {
                 throw await PublishUnhandledException(exception);
             }

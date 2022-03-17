@@ -45,7 +45,7 @@ public class ExceptionPriority : IEquatable<ExceptionPriority>, IComparable<Exce
         return HandledType == other.HandledType;
     }
 
-    public static ExceptionPriority New<TException>(int weight, int httpCode) where TException : IApplicationException
+    public static ExceptionPriority New<TException>(int weight, int httpCode) where TException : IDomainException
     {
         return new ExceptionPriority(weight, httpCode, typeof(TException));
     }

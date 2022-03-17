@@ -32,7 +32,7 @@ public class HttpErrorService : IHttpErrorService
                 case ISubstantiateException substantiateException:
                     return new HttpErrorWrapper(priority.HttpCode,
                         HttpError.FromSubstantiateException(substantiateException, instance, _withTrace));
-                case IApplicationException applicationException:
+                case IDomainException applicationException:
                     return new HttpErrorWrapper(priority.HttpCode,
                         HttpError.FromException(exception, instance, _withTrace));
             }
