@@ -12,6 +12,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedRoad.Common.Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedRoad.Common.System", "SeedRoad.Common.System\SeedRoad.Common.System.csproj", "{8FCCE51C-2CDD-4768-BB5E-22E831AF523E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedRoad.Common.Configuration", "SeedRoad.Common.Configuration\SeedRoad.Common.Configuration.csproj", "{AB3AE92A-214B-44FE-B297-15CF9449F78D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedRoad.Common.Infrastructure.Database.EntityFramework", "SeedRoad.Common.Infrastructure.Database.EntityFramework\SeedRoad.Common.Infrastructure.Database.EntityFramework.csproj", "{8B4BA7EF-2AAE-4307-9E0A-F3AE0057D11E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedRoad.Common.Infrastructure.Messaging", "SeedRoad.Common.Infrastructure.Messaging\SeedRoad.Common.Infrastructure.Messaging.csproj", "{E286EFFA-D2D3-4B7C-9109-D72767D47A1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedRoad.Common.Messaging", "SeedRoad.Common.Messaging\SeedRoad.Common.Messaging.csproj", "{6DBCC991-4352-4EDC-83DD-D31221E3704C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedRoad.Common.Presentation.Messaging", "SeedRoad.Common.Presentation.Messaging\SeedRoad.Common.Presentation.Messaging.csproj", "{C4E9FF5B-DAB0-47E3-8EE2-48F50F40BBFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +52,25 @@ Global
 		{8FCCE51C-2CDD-4768-BB5E-22E831AF523E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FCCE51C-2CDD-4768-BB5E-22E831AF523E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FCCE51C-2CDD-4768-BB5E-22E831AF523E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB3AE92A-214B-44FE-B297-15CF9449F78D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB3AE92A-214B-44FE-B297-15CF9449F78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB3AE92A-214B-44FE-B297-15CF9449F78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB3AE92A-214B-44FE-B297-15CF9449F78D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B4BA7EF-2AAE-4307-9E0A-F3AE0057D11E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B4BA7EF-2AAE-4307-9E0A-F3AE0057D11E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B4BA7EF-2AAE-4307-9E0A-F3AE0057D11E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B4BA7EF-2AAE-4307-9E0A-F3AE0057D11E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E286EFFA-D2D3-4B7C-9109-D72767D47A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E286EFFA-D2D3-4B7C-9109-D72767D47A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E286EFFA-D2D3-4B7C-9109-D72767D47A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E286EFFA-D2D3-4B7C-9109-D72767D47A1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DBCC991-4352-4EDC-83DD-D31221E3704C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DBCC991-4352-4EDC-83DD-D31221E3704C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DBCC991-4352-4EDC-83DD-D31221E3704C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DBCC991-4352-4EDC-83DD-D31221E3704C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4E9FF5B-DAB0-47E3-8EE2-48F50F40BBFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4E9FF5B-DAB0-47E3-8EE2-48F50F40BBFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4E9FF5B-DAB0-47E3-8EE2-48F50F40BBFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4E9FF5B-DAB0-47E3-8EE2-48F50F40BBFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
