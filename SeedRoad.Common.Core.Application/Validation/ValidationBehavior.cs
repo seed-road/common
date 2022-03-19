@@ -2,7 +2,7 @@
 using MediatR;
 using ValidationException = SeedRoad.Common.Core.Application.Exceptions.ValidationException;
 
-namespace SeedRoad.Common.Core.Application.Behaviors;
+namespace SeedRoad.Common.Core.Application.Validation;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

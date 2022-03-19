@@ -12,6 +12,14 @@ public static class ConfigurationExtensions
                throw new ArgumentException($"Configuration not found : {configurationName}");
     }
 
+    public static TImplementation? GetConfiguration<TImplementation>(
+        this IConfiguration configuration) where TImplementation : class
+    {
+        var configurationName = typeof(TImplementation).Name;
+        return configuration.GetSection(configurationName).Get<TImplementation>();
+    }
+
+
     public static TImplementation GetRequiredConfiguration<TImplementation>(
         this IConfiguration configuration, string configurationName) where TImplementation : class
     {

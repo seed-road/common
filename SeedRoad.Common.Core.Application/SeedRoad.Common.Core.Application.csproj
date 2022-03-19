@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\SeedRoad.Common.Configuration\SeedRoad.Common.Configuration.csproj" />
       <ProjectReference Include="..\SeedRoad.Common.Core.Domain\SeedRoad.Common.Core.Domain.csproj" />
       <ProjectReference Include="..\SeedRoad.Common.System\SeedRoad.Common.System.csproj" />
     </ItemGroup>

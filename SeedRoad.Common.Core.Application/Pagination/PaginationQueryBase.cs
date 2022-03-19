@@ -1,11 +1,10 @@
 using System.Collections.Immutable;
+using MediatR;
 
 namespace SeedRoad.Common.Core.Application.Pagination;
 
-public record PaginationQueryBase
+public record PaginationQueryBase<TResponse> : IRequest<TResponse>, IPagination
 {
-    public int Page { get; set; } = 1;
-    public int Size { get; set; } = 10;
-    public IReadOnlyCollection<string> Test => _test.ToImmutableHashSet();
-    private HashSet<string> _test = new HashSet<string>();
+    public int Page { get; set; } = IPagination.UnsetPaginationValue;
+    public int Size { get; set; } = IPagination.UnsetPaginationValue;
 }

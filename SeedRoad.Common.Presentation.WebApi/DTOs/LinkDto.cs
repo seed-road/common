@@ -6,12 +6,12 @@ public class LinkDto
     {
         Href = href ?? throw new ArgumentException($"Link href cannot be null for new {nameof(LinkDto)} instance");
         Rel = rel;
-        Method = method;
+        Method = method.Method;
     }
 
     public string Href { get; }
     public string Rel { get; }
-    public HttpMethod Method { get; }
+    public string Method { get; }
 
     public static LinkDto SelfLink(string? href)
     {

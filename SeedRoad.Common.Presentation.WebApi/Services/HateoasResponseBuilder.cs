@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using SeedRoad.Common.Core.Application.Pagination;
 using SeedRoad.Common.Presentation.WebApi.Contracts;
 using SeedRoad.Common.Presentation.WebApi.DTOs;
+using SeedRoad.Common.Presentation.WebApi.Extensions;
 using SeedRoad.Common.System;
 
 namespace SeedRoad.Common.Presentation.WebApi.Services;
@@ -18,39 +20,51 @@ public class HateoasResponseBuilder : IHateoasResponseBuilder
         _sizeParam = sizeParam;
     }
 
-    public HateoasPageResponse<T> FromPagedList<T>(IUrlHelper urlHelper, PagedListResume page,
-        IList<T> values,
+    public HateoasPageResponse<T> FromPagedList<T>(IUrlHelper urlHelper, IPagedList<T> page,
+        IEnumerable<T> values,
         string routeName, object? routeValues = null)
     {
         var valuesDic = routeValues == null ? new Dictionary<string, object>() : routeValues.ToDictionary<object>();
 
-        return GeneratePageResponse(urlHelper, page, values, routeName, valuesDic);
+        return GeneratePageResponse(urlHelper, page.ToPagedListResume(), values, routeName, valuesDic);
     }
 
 
-    public HateoasPageResponse<T> FromPagedList<T>(IUrlHelper urlHelper, PagedListResume page,
-        IList<T> values,
+    public HateoasPageResponse<T> FromPagedList<T>(IUrlHelper urlHelper, IPagedList<T> page,
         string routeName, IDictionary<string, object>? routeValues = null)
     {
         var valuesDic = routeValues == null ? new Dictionary<string, object>() : routeValues.ToDictionary<object>();
 
-        return GeneratePageResponse(urlHelper, page, values, routeName, valuesDic);
+        return GeneratePageResponse(urlHelper, page.ToPagedListResume(), page, routeName, valuesDic);
     }
 
-    public HateoasResponse<T> ToEntityResponse<T>(T entity, IList<LinkDto> entityLinks)
+    public HateoasPageResponse<T> FromPagedList<T>(IUrlHelper urlHelper, PagedListResume resume,
+        IEnumerable<T> values,
+        string routeName, object? routeValues = null)
     {
-        return new HateoasResponse<T>(entity, entityLinks);
+        var valuesDic = routeValues == null ? new Dictionary<string, object>() : routeValues.ToDictionary<object>();
+
+        return GeneratePageResponse(urlHelper, resume, values, routeName, valuesDic);
+    }
+
+
+  
+
+
+    public HateoasResponse<T> ToEntityResponse<T>(T entity, IEnumerable<LinkDto> entityLinks)
+    {
+        return new HateoasResponse<T>(entity, entityLinks.ToList());
     }
 
 
     public static HateoasResponseBuilder Default(string pageParam = DefaultPageQueryParam,
         string sizeParam = DefaultSizeQueryParam)
     {
-        return new(pageParam, sizeParam);
+        return new HateoasResponseBuilder(pageParam, sizeParam);
     }
 
     private HateoasPageResponse<T> GeneratePageResponse<T>(IUrlHelper urlHelper, PagedListResume page,
-        IList<T> values,
+        IEnumerable<T> values,
         string routeName, IDictionary<string, object> valuesDic)
     {
         valuesDic[_pageParam] = page.CurrentPage;
@@ -74,6 +88,6 @@ public class HateoasResponseBuilder : IHateoasResponseBuilder
             links.Add(LinkDto.NextPage(urlHelper.Link(routeName, nextValues)));
         }
 
-        return new HateoasPageResponse<T>(values, links, page.TotalCount);
+        return new HateoasPageResponse<T>(values.ToList(), links, page.TotalCount);
     }
 }

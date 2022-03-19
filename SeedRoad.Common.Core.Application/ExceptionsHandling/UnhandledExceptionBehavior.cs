@@ -6,7 +6,7 @@ using SeedRoad.Common.Core.Application.Notifications;
 using SeedRoad.Common.Core.Domain.Exceptions;
 using SeedRoad.Common.System;
 
-namespace SeedRoad.Common.Core.Application.Behaviors;
+namespace SeedRoad.Common.Core.Application.ExceptionsHandling;
 
 public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull, IRequest<TResponse>

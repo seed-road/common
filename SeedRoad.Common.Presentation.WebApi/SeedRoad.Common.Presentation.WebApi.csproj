@@ -19,8 +19,4 @@
         <ProjectReference Include="..\SeedRoad.Common.System\SeedRoad.Common.System.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Configurations" />
-    </ItemGroup>
-
 </Project>

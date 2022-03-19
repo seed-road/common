@@ -1,7 +1,10 @@
-﻿namespace SeedRoad.Common.Presentation.WebApi.DTOs;
+﻿using SeedRoad.Common.Core.Application.Pagination;
+
+namespace SeedRoad.Common.Presentation.WebApi.DTOs;
 
 public class PagedListResume
 {
+
     public PagedListResume(long currentPage, long totalPages, long pageSize, long totalCount, bool hasPrevious,
         bool hasNext)
     {

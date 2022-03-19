@@ -4,13 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using NSwag;
+using SeedRoad.Common.Presentation.WebApi.Contracts;
 using SeedRoad.Common.Presentation.WebApi.ErrorHandling;
+using SeedRoad.Common.Presentation.WebApi.Services;
 using ValidationException = SeedRoad.Common.Core.Application.Exceptions.ValidationException;
 
 namespace SeedRoad.Common.Presentation.WebApi.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddResponseBuilder(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection.AddSingleton<IHateoasResponseBuilder>(_ =>HateoasResponseBuilder.Default());
+    }
+
     public static IServiceCollection AddCommonCors(this IServiceCollection serviceCollection, string policyName,
         string clientUrl)
     {

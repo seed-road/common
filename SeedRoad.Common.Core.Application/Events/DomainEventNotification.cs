@@ -1,7 +1,7 @@
 using MediatR;
 using SeedRoad.Common.Core.Domain.Events;
 
-namespace SeedRoad.Common.Core.Application.Notifications;
+namespace SeedRoad.Common.Core.Application.Events;
 
 public class DomainEventNotification<TDomainEvent> : INotification where TDomainEvent : IDomainEvent
 {

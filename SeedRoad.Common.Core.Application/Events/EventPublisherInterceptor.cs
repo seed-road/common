@@ -2,12 +2,11 @@ using System.Reflection;
 using Castle.DynamicProxy;
 using Microsoft.Extensions.Logging;
 using SeedRoad.Common.Core.Application.Extensions;
-using SeedRoad.Common.Core.Application.Notifications;
 using SeedRoad.Common.Core.Domain.Definitions;
 using SeedRoad.Common.Core.Domain.Events;
 using SeedRoad.Common.System;
 
-namespace SeedRoad.Common.Core.Application.Interceptors;
+namespace SeedRoad.Common.Core.Application.Events;
 
 public class EventPublisherInterceptor : IInterceptor
 {
@@ -25,7 +24,7 @@ public class EventPublisherInterceptor : IInterceptor
         if (!IsAggregateRepository(invocation.TargetType))
         {
             throw new ApplicationException(
-                $"{invocation.GetType()} doesn't implement IAggregateRepository<,> interface");
+                $"{invocation.GetType()} doesn't implement {nameof(IAggregateRepository<object, WriteAggregateDto, object>)} interface");
         }
 
         invocation.Proceed();
@@ -37,6 +36,7 @@ public class EventPublisherInterceptor : IInterceptor
         var dto = invocation.Arguments.First() as IAggregateDto;
         foreach (IDomainEvent aggregateEvent in dto.Events.ToList())
         {
+            _logger.LogInformation("Send aggregate event  {AggregateEvent}", aggregateEvent.ToString());
             var notification = aggregateEvent.ToGenericType(typeof(DomainEventNotification<>));
             _serviceProvider.FireNotificationAndForget(notification, _logger);
         }
