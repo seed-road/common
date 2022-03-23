@@ -12,12 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
-            <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\SeedRoad.Common.Core.Application\SeedRoad.Common.Core.Application.csproj" />
         <ProjectReference Include="..\SeedRoad.Common.System\SeedRoad.Common.System.csproj" />
     </ItemGroup>
