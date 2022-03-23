@@ -4,6 +4,6 @@ namespace SeedRoad.Common.Core.Domain.Definitions;
 
 public interface IAggregateDto
 {
-    IReadOnlyList<IDomainEvent>? Events { get; }
+    IList<IDomainEvent>? Events { get; }
     void ClearEvents();
 }

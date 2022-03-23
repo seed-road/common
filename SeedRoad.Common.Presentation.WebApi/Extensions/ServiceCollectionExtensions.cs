@@ -13,9 +13,11 @@ namespace SeedRoad.Common.Presentation.WebApi.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    private static readonly HashSet<ApiVersion> ApiVersions = new();
+
     public static IServiceCollection AddResponseBuilder(this IServiceCollection serviceCollection)
     {
-        return serviceCollection.AddSingleton<IHateoasResponseBuilder>(_ =>HateoasResponseBuilder.Default());
+        return serviceCollection.AddSingleton<IHateoasResponseBuilder>(_ => HateoasResponseBuilder.Default());
     }
 
     public static IServiceCollection AddCommonCors(this IServiceCollection serviceCollection, string policyName,
@@ -34,26 +36,29 @@ public static class ServiceCollectionExtensions
         });
     }
 
-    public static IApiVersionDescriptionProvider AddCommonVersioning(this IServiceCollection serviceCollection,
+    public static IServiceCollection AddCommonVersioning(this IServiceCollection serviceCollection,
         string grpNameFormat = "'v'VV",
         int majorVersion = 0, int minorVersion = 0)
     {
+        var apiVersion = new ApiVersion(majorVersion, minorVersion);
+        ApiVersions.Add(apiVersion);
         return serviceCollection
-            .AddVersionedApiExplorer(setupAction => { setupAction.GroupNameFormat = grpNameFormat; })
+            .AddVersionedApiExplorer(setupAction =>
+            {
+                setupAction.GroupNameFormat = grpNameFormat;
+                setupAction.SubstituteApiVersionInUrl = true;
+            })
             .AddApiVersioning(setupAction =>
             {
                 setupAction.AssumeDefaultVersionWhenUnspecified = true;
-                setupAction.DefaultApiVersion = new ApiVersion(majorVersion, minorVersion);
+                setupAction.DefaultApiVersion = apiVersion;
                 setupAction.ReportApiVersions = true;
-            })
-            .BuildServiceProvider()
-            .GetRequiredService<IApiVersionDescriptionProvider>();
+            });
     }
 
-    public static void AddCommonSwagger(this IServiceCollection services,
-        IApiVersionDescriptionProvider apiVersionDescriptionProvider, string apiTitle, string apiDescription)
+    public static void AddCommonSwagger(this IServiceCollection services, string apiTitle, string apiDescription)
     {
-        foreach (ApiVersionDescription apiVersionDescription in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        foreach (ApiVersion apiVersion in ApiVersions)
         {
             services.AddSwaggerDocument((settings, serviceProvider) =>
             {
@@ -76,12 +81,14 @@ public static class ServiceCollectionExtensions
                 });
                 settings.PostProcess = document =>
                 {
-                    document.Info.Version = apiVersionDescription.ApiVersion.ToString();
+                    document.Info.Version = apiVersion.ToString();
                     document.Info.Title = apiTitle;
                     document.Info.Description = apiDescription;
                 };
             });
         }
+
+       
     }
 
     public static IServiceCollection AddCommonHttpErrorService(this IServiceCollection serviceCollection,

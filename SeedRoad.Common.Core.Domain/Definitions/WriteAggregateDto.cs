@@ -6,13 +6,11 @@ public abstract class WriteAggregateDto : IAggregateDto
 {
     public WriteAggregateDto(IEnumerable<IDomainEvent> events)
     {
-        _events = events.ToList();
+        Events = events.ToList();
     }
 
 
-    public Guid Id { get; set; }
-    public IReadOnlyList<IDomainEvent>? Events => _events.AsReadOnly();
-    protected List<IDomainEvent>? _events;
+    public IList<IDomainEvent>? Events { get;  set; }
 
     protected WriteAggregateDto()
     {
@@ -20,6 +18,6 @@ public abstract class WriteAggregateDto : IAggregateDto
 
     public void ClearEvents()
     {
-        _events = new List<IDomainEvent>();
+        Events = new List<IDomainEvent>();
     }
 }
