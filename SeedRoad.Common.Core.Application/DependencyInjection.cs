@@ -50,7 +50,7 @@ public static class DependencyInjection
 
 
     private static ProxyGenerator PrepareProxyFactory<TImplementation>(Type[] interceptorsType,
-        IServiceProvider serviceProvider, out TImplementation actual, out IInterceptor[] interceptors)
+        IServiceProvider serviceProvider, out TImplementation actual, out IAsyncInterceptor[] interceptors)
         where TImplementation : class
     {
         var proxyGenerator = serviceProvider.GetRequiredService<ProxyGenerator>();
@@ -59,10 +59,10 @@ public static class DependencyInjection
         return proxyGenerator;
     }
 
-    private static IInterceptor[] GetInterceptors(Type[] interceptorsType, IServiceProvider serviceProvider)
+    private static IAsyncInterceptor[] GetInterceptors(Type[] interceptorsType, IServiceProvider serviceProvider)
     {
         return serviceProvider
-            .GetServices<IInterceptor>()
+            .GetServices<IAsyncInterceptor>()
             .Where(interceptor =>
                 interceptorsType.IsNullOrEmpty() || interceptorsType.Contains(interceptor.GetType()))
             .ToArray();
@@ -75,7 +75,7 @@ public static class DependencyInjection
         var allAssemblies = assemblies.WithCallingAssembly();
         return serviceCollection
             .AddValidatorsFromAssemblies(allAssemblies)
-            .AddScoped<IInterceptor, EventPublisherInterceptor>()
+            .AddScoped<IAsyncInterceptor, EventPublisherInterceptor>()
             .AddMediatR(allAssemblies)
             .AddPagination(configuration)
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehavior<,>))
