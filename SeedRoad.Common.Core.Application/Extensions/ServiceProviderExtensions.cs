@@ -9,13 +9,13 @@ public static class ServiceProviderExtensions
     public static void FireNotificationAndForget<T>(this IServiceProvider serviceProvider, T notification,
         ILogger? logger = null)
     {
-        Task.Run(() =>
+        Task.Run(async () =>
         {
             try
             {
                 using var scope = serviceProvider.CreateScope();
                 var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
-                publisher.Publish(notification);
+                await publisher.Publish(notification);
             }
             catch (Exception exception)
             {

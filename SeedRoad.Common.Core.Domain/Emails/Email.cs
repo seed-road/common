@@ -1,3 +1,3 @@
 ﻿namespace SeedRoad.Common.Core.Domain.Emails;
 
-public record Email<T>(Contact Contact, string Subject, T Content);
+public record Email<TContent>(Contact Contact, string Subject, TContent Content) where TContent: EmailContent;
