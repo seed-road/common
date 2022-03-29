@@ -2,18 +2,18 @@
 
 namespace SeedRoad.Common.Core.Domain.Exceptions;
 
-public class ExceptionsAggregate : Exception, IEnumerable<ISubstantiateException>, IDomainException
+public class ExceptionsAggregate : Exception, IEnumerable<Exception>, IDomainException
 {
-    public ExceptionsAggregate(IEnumerable<ISubstantiateException> exceptions)
+    public ExceptionsAggregate(IEnumerable<Exception> exceptions)
     {
         Exceptions = exceptions;
     }
 
-    public IEnumerable<ISubstantiateException> Exceptions { get; }
+    public IEnumerable<Exception> Exceptions { get; }
 
     public override string Message => "Multiple errors occured";
 
-    public IEnumerator<ISubstantiateException> GetEnumerator()
+    public IEnumerator<Exception> GetEnumerator()
     {
         return Exceptions.GetEnumerator();
     }

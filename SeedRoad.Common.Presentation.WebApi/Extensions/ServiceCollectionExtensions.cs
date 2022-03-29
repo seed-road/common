@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using NSwag;
+using SeedRoad.Common.Core.Domain.Exceptions;
 using SeedRoad.Common.Presentation.WebApi.Contracts;
 using SeedRoad.Common.Presentation.WebApi.ErrorHandling;
 using SeedRoad.Common.Presentation.WebApi.Services;
@@ -72,7 +73,7 @@ public static class ServiceCollectionExtensions
                         {
                             Scopes = new Dictionary<string, string>
                             {
-                                { "api1", "API1" },
+                                {"api1", "API1"},
                             },
                             AuthorizationUrl = "https://localhost:5001/connect/authorize",
                             TokenUrl = "https://localhost:5001/connect/token"
@@ -87,15 +88,18 @@ public static class ServiceCollectionExtensions
                 };
             });
         }
-
-       
     }
 
     public static IServiceCollection AddCommonHttpErrorService(this IServiceCollection serviceCollection,
-        bool enableTraces, params ExceptionPriority[] exceptionPriorities)
+        bool enableTraces, IDictionary<Type, string> codeMapping, params ExceptionPriority[] exceptionPriorities)
     {
         return serviceCollection.AddScoped<IHttpErrorService, HttpErrorService>(_ =>
-            HttpErrorService.DefaultErrorService(exceptionPriorities, enableTraces));
+            new HttpErrorService(new HttpErrorServiceConfiguration()
+            {
+                ExceptionPriorities = exceptionPriorities,
+                WithTrace = enableTraces,
+                CodeMapping = codeMapping
+            }));
     }
 
     public static IServiceCollection AddCommonHttpErrorService(this IServiceCollection serviceCollection,
@@ -103,8 +107,10 @@ public static class ServiceCollectionExtensions
     {
         var exceptionPriorities = new[]
         {
-            ExceptionPriority.New<ValidationException>(0, (int)HttpStatusCode.UnprocessableEntity),
+            ExceptionPriority.New<ValidationException>(0, (int) HttpStatusCode.UnprocessableEntity),
+            ExceptionPriority.New<NotFoundException>(1, (int) HttpStatusCode.NotFound),
         };
-        return serviceCollection.AddCommonHttpErrorService(enableTraces, exceptionPriorities);
+        return serviceCollection.AddCommonHttpErrorService(enableTraces, new Dictionary<Type, string>(),
+            exceptionPriorities);
     }
 }

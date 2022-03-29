@@ -3,7 +3,7 @@ using SeedRoad.Common.Core.Domain.Exceptions;
 
 namespace SeedRoad.Common.Core.Application.Exceptions;
 
-public class UnhandledException : Exception, ISubstantiateException
+public class UnhandledException : Exception, ISubstantiateException<string>
 {
     public const string DefaultMessage = "An unexpected technical error occured";
 
@@ -16,7 +16,7 @@ public class UnhandledException : Exception, ISubstantiateException
         get
         {
             var stringBuilder = new StringBuilder();
-            Exception exception = InnerException;
+            var exception = InnerException;
             while (exception != null)
             {
                 stringBuilder.AppendLine(exception.Message);
@@ -28,5 +28,5 @@ public class UnhandledException : Exception, ISubstantiateException
         }
     }
 
-    public object Reason => InnerException?.Message ?? "No more details";
+    public string Reason => InnerException?.Message ?? "No more details";
 }

@@ -2,5 +2,12 @@
 
 public interface ISubstantiateException : IDomainException
 {
-    public object Reason { get; }
+    object ReasonObject { get; }
 }
+
+public interface ISubstantiateException<T> : ISubstantiateException where T : notnull
+{
+    object ISubstantiateException.ReasonObject => Reason;
+    public T Reason { get; }
+}
+

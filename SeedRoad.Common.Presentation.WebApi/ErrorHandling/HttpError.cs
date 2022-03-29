@@ -8,30 +8,25 @@ public class HttpError
     {
     }
 
-    public HttpError(string url, IEnumerable<Error> errors)
+    public HttpError(string url, IEnumerable<Error<object, object>> errors)
     {
         Url = url;
         Errors = errors.ToList();
     }
 
     public string Url { get; set; }
-    public List<Error> Errors { get; set; }
-
-    public static HttpError FromSubstantiateException(ISubstantiateException applicationException, string instance,
+    public List<Error<object,object>> Errors { get; set; }
+    
+    public static HttpError FromException(ExceptionWrapper exception, string instance,
         bool withTrace)
     {
-        return new HttpError(instance, new[] { Error.FromApplicationException(applicationException, withTrace) });
+        var error = Error<string, string>.FromException(exception, withTrace);
+        return new HttpError(instance, new[] {error});
     }
 
-    public static HttpError FromException(Exception exception, string instance,
-        bool withTrace)
-    {
-        return new HttpError(instance, new[] { Error.FromException(exception, withTrace) });
-    }
-
-    public static HttpError FromApplicationExceptionsAggregate(ExceptionsAggregate exception,
+    public static HttpError FromApplicationExceptionsAggregate(IEnumerable<ExceptionWrapper> exceptions, 
         string instance, bool withTrace)
     {
-        return new HttpError(instance, exception.Select(e => Error.FromApplicationException(e, withTrace)));
+        return new HttpError(instance, exceptions.Select(e => Error<object, object>.FromException(e, withTrace)));
     }
 }
