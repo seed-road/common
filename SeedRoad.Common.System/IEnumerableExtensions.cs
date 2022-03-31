@@ -1,6 +1,6 @@
 namespace SeedRoad.Common.System;
 
-public static class IEnumerableExtensions
+public static class EnumerableExtensions
 {
     public static IEnumerable<T> ToNotNullEnumerable<T>(this IEnumerable<T?> enumerable)
     {
