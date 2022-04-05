@@ -7,16 +7,16 @@ public class NotFoundException : Exception, IDomainException
     public NotFoundException() : base("Entity not found")
     {
     }
+    protected NotFoundException(string message):base(message){}
 }
 
-public class NotFoundException<TId, TEntity> : NotFoundException, ISubstantiateException<string>
+public class NotFoundException<TId, TEntity> : NotFoundException, ITargetException<TId>
 {
-    public TId Id { get; }
 
-    public NotFoundException(TId id)
+    public NotFoundException(TId id): base($"{typeof(TEntity)} not found by : {id}")
     {
-        Id = id;
+        Target = id;
     }
 
-    public virtual string Reason => $"{typeof(TEntity)} not found by id : {Id}";
+    public TId Target { get; } 
 }

@@ -2,14 +2,19 @@
 
 namespace SeedRoad.Common.Core.Domain.Exceptions;
 
-public class ExceptionsAggregate : Exception, IEnumerable<Exception>, IDomainException
+public class ExceptionsAggregate : Exception, IExceptionsAggregate
 {
-    public ExceptionsAggregate(IEnumerable<Exception> exceptions)
+    public ExceptionsAggregate()
     {
-        Exceptions = exceptions;
+        Exceptions = new List<Exception>();
     }
 
-    public IEnumerable<Exception> Exceptions { get; }
+    public ExceptionsAggregate(IEnumerable<Exception> exceptions)
+    {
+        Exceptions = exceptions.ToList();
+    }
+
+    public IList<Exception> Exceptions { get; }
 
     public override string Message => "Multiple errors occured";
 
@@ -21,5 +26,62 @@ public class ExceptionsAggregate : Exception, IEnumerable<Exception>, IDomainExc
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    public void ThrowIfAny()
+    {
+        if (Exceptions.Any()) throw this;
+    }
+
+    public Exception AggregatedException => this;
+
+    public void Add(Exception item)
+    {
+        Exceptions.Add(item);
+    }
+
+    public void Clear()
+    {
+        Exceptions.Clear();
+    }
+
+    public bool Contains(Exception item)
+    {
+        return Exceptions.Contains(item);
+    }
+
+    public void CopyTo(Exception[] array, int arrayIndex)
+    {
+        Exceptions.CopyTo(array, arrayIndex);
+    }
+
+    public bool Remove(Exception item)
+    {
+        return Exceptions.Remove(item);
+    }
+
+    public int Count => Exceptions.Count;
+
+    public bool IsReadOnly => Exceptions.IsReadOnly;
+
+    public int IndexOf(Exception item)
+    {
+        return Exceptions.IndexOf(item);
+    }
+
+    public void Insert(int index, Exception item)
+    {
+        Exceptions.Insert(index, item);
+    }
+
+    public void RemoveAt(int index)
+    {
+        Exceptions.RemoveAt(index);
+    }
+
+    public Exception this[int index]
+    {
+        get => Exceptions[index];
+        set => Exceptions[index] = value;
     }
 }

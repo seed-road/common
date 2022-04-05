@@ -2,7 +2,7 @@
 
 namespace SeedRoad.Common.Presentation.WebApi.ErrorHandling;
 
-public class ExceptionPriority : IEquatable<ExceptionPriority>, IComparable<ExceptionPriority>
+public class ExceptionPriority : IEquatable<ExceptionPriority>
 {
     private ExceptionPriority(int weight, int httpCode, Type handledType)
     {
@@ -15,20 +15,6 @@ public class ExceptionPriority : IEquatable<ExceptionPriority>, IComparable<Exce
     public int HttpCode { get; }
     public Type HandledType { get; }
 
-    public int CompareTo(ExceptionPriority? other)
-    {
-        if (ReferenceEquals(this, other))
-        {
-            return 0;
-        }
-
-        if (ReferenceEquals(null, other))
-        {
-            return 1;
-        }
-
-        return Weight.CompareTo(other.Weight);
-    }
 
     public bool Equals(ExceptionPriority? other)
     {
@@ -67,7 +53,7 @@ public class ExceptionPriority : IEquatable<ExceptionPriority>, IComparable<Exce
             return false;
         }
 
-        return Equals((ExceptionPriority)obj);
+        return Equals((ExceptionPriority) obj);
     }
 
     public override int GetHashCode()

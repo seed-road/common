@@ -23,7 +23,7 @@ public class HttpErrorService : IHttpErrorService
     private readonly int _defaultServerErrorCode;
     private readonly string _defaultServerTextErrorCode;
 
-    private readonly ImmutableSortedSet<ExceptionPriority> _exceptionPriorities;
+    private readonly ImmutableList<ExceptionPriority> _exceptionPriorities;
     private readonly IDictionary<Type, string> _codeMapping;
     private readonly bool _withTrace;
 
@@ -34,7 +34,10 @@ public class HttpErrorService : IHttpErrorService
         _defaultMultipleExceptionCode = configuration.DefaultMultipleExceptionCode;
         _defaultServerTextErrorCode = configuration.DefaultServerTextErrorCode;
         _codeMapping = configuration.CodeMapping;
-        _exceptionPriorities = configuration.ExceptionPriorities.ToImmutableSortedSet();
+        _exceptionPriorities = configuration.ExceptionPriorities
+            .ToHashSet()
+            .OrderBy(priority => priority.Weight)
+            .ToImmutableList();
     }
 
     public HttpErrorWrapper ToHttpErrorWrapper(Exception exception, string instance)

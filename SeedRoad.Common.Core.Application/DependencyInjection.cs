@@ -10,6 +10,7 @@ using SeedRoad.Common.Core.Application.Events;
 using SeedRoad.Common.Core.Application.ExceptionsHandling;
 using SeedRoad.Common.Core.Application.Pagination;
 using SeedRoad.Common.Core.Application.Validation;
+using SeedRoad.Common.Core.Domain.Exceptions;
 using SeedRoad.Common.System;
 
 namespace SeedRoad.Common.Core.Application;
@@ -81,6 +82,7 @@ public static class DependencyInjection
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(PaginationBehavior<,>))
+            .AddScoped<IExceptionsAggregate, ExceptionsAggregate>()
             .AddSingleton(new ProxyGenerator());
     }
 

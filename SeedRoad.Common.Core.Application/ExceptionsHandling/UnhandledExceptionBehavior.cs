@@ -13,12 +13,14 @@ public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior
 {
     private readonly IServiceProvider _provider;
     private readonly ILogger<UnhandledExceptionBehavior<TRequest, TResponse>> _logger;
+    private readonly IExceptionsAggregate _exceptionsAggregate;
 
     public UnhandledExceptionBehavior(IServiceProvider provider,
-        ILogger<UnhandledExceptionBehavior<TRequest, TResponse>> logger)
+        ILogger<UnhandledExceptionBehavior<TRequest, TResponse>> logger, IExceptionsAggregate exceptionsAggregate)
     {
         _provider = provider;
         _logger = logger;
+        _exceptionsAggregate = exceptionsAggregate;
     }
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
@@ -30,22 +32,18 @@ public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior
         }
         catch (Exception exception)
         {
-            if (exception is not IDomainException)
+            if (exception != _exceptionsAggregate)
             {
-                throw await PublishUnhandledException(exception);
+                _exceptionsAggregate.Add(exception);
             }
-
-            var exceptionNotification = exception.ToGenericType(typeof(ExceptionNotification<>));
-            _provider.FireNotificationAndForget(exceptionNotification, _logger);
-            throw;
+            foreach (var innerException in _exceptionsAggregate)
+            {
+                var exceptionNotification = innerException is IDomainException
+                    ? innerException.ToGenericType(typeof(ExceptionNotification<>))
+                    : new ExceptionNotification<UnhandledException>(new UnhandledException(innerException));
+                _provider.FireNotificationAndForget(exceptionNotification, _logger);
+            }
+            throw _exceptionsAggregate.AggregatedException;
         }
-    }
-
-    private async Task<UnhandledException> PublishUnhandledException(Exception e)
-    {
-        var unhandledException = new UnhandledException(e);
-        var applicationException = new ExceptionNotification<UnhandledException>(unhandledException);
-        _provider.FireNotificationAndForget(applicationException, _logger);
-        return unhandledException;
     }
 }
