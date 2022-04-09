@@ -11,7 +11,7 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
         private readonly ILogger<MessageProcessor<TEvent>> _logger;
         private readonly IServiceProvider _serviceProvider;
 
-        protected MessageProcessor(ILogger<MessageProcessor<TEvent>> logger,
+        public MessageProcessor(ILogger<MessageProcessor<TEvent>> logger,
             IServiceProvider serviceProvider)
         {
             _logger = logger;

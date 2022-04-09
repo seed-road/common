@@ -11,6 +11,7 @@ public static class ServiceCollection
         RabbitMqConfiguration configuration,
         RoutingConfiguration routingConfiguration)
     {
+        serviceCollection.AddTransient(typeof(MessageProcessor<>));
         return serviceCollection.AddHostedService(provider =>
         {
             var msgProcessor = provider.GetRequiredService<MessageProcessor<TEvent>>();
