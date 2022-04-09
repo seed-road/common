@@ -1,0 +1,8 @@
+﻿{
+  "include": ["./src/**/*"],
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true, // generates declaration files
+    "esModuleInterop": true
+  }
+}
