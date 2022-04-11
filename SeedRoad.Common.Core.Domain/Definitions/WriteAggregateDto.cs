@@ -10,7 +10,7 @@ public abstract class WriteAggregateDto : IAggregateDto
     }
 
 
-    public IList<IDomainEvent>? Events { get;  set; }
+    public IList<IDomainEvent>? Events { get; set; } = new List<IDomainEvent>();
 
     protected WriteAggregateDto()
     {

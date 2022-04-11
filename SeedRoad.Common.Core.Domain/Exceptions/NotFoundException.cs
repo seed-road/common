@@ -7,16 +7,19 @@ public class NotFoundException : Exception, IDomainException
     public NotFoundException() : base("Entity not found")
     {
     }
-    protected NotFoundException(string message):base(message){}
+
+    public NotFoundException(string message) : base(message)
+    {
+    }
 }
 
 public class NotFoundException<TId, TEntity> : NotFoundException, ITargetException<TId>
 {
-
-    public NotFoundException(TId id): base($"{typeof(TEntity)} not found by : {id}")
+    public NotFoundException(TId id) : base($"{typeof(TEntity)} not found by : {id}")
     {
         Target = id;
     }
 
-    public TId Target { get; } 
+    public TId Target { get; }
 }
+

@@ -23,7 +23,7 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
             try
             {
                 using IServiceScope scope = _serviceProvider.CreateScope();
-                var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
+                var sender = scope.ServiceProvider.GetRequiredService<ISender>();
                 JObject json = JObject.Parse(message);
                 var runParticipation = JsonConvert.DeserializeObject<TEvent>(json.ToString());
                 if (runParticipation is null)
@@ -32,7 +32,7 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
                     return false;
                 }
 
-                publisher.Publish(runParticipation);
+                sender.Send(runParticipation);
                 return true;
             }
             catch (Exception ex)
