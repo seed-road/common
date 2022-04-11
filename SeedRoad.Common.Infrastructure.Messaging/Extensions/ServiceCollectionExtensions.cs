@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SeedRoad.Common.Core.Domain.Events;
 using SeedRoad.Common.Infrastructure.Messaging.Services;
 using SeedRoad.Common.Messaging.Configurations;
 
@@ -15,7 +16,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddCommonDispatcher<TMessage>(this IServiceCollection serviceCollection, RoutingConfiguration routingConfiguration)
     {
-        return serviceCollection.AddScoped(provider =>
+        return serviceCollection.AddScoped<IEventDispatcher<TMessage>>(provider =>
         {
             var dispatcherService = provider.GetRequiredService<IDispatcherService>();
             return new EventDispatcher<TMessage>(dispatcherService, routingConfiguration);
