@@ -23,3 +23,12 @@ public class NotFoundException<TId, TEntity> : NotFoundException, ITargetExcepti
     public TId Target { get; }
 }
 
+public class NotFoundException<TId> : NotFoundException, ITargetException<TId>
+{
+    public NotFoundException(string entityName, TId id) : base($"{entityName} not found by : {id}")
+    {
+        Target = id;
+    }
+
+    public TId Target { get; }
+}
