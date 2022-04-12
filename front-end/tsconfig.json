@@ -1,8 +1,15 @@
 ﻿{
-  "include": ["./src/**/*"],
+  "include": [
+    "./src/**/*"
+  ],
   "compilerOptions": {
     "strict": true,
-    "declaration": true, // generates declaration files
-    "esModuleInterop": true
+    "declaration": true,
+    // generates declaration files
+    "esModuleInterop": true,
+    "typeRoots": [
+      "src/validation/types",
+      "node_modules/@types"
+    ]
   }
 }
