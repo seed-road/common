@@ -18,4 +18,20 @@ public static class ArrayExtensions
 
         return destination;
     }
+
+    public static List<List<T>> ToListOfList<T>(this T[,] source)
+    {
+        var returnedList = new List<List<T>>();
+        for (var i = 0; i <= source.GetUpperBound(0); i++)
+        {
+            var row = new List<T>();
+            returnedList.Add(row);
+            for(var j=0; j<=source.GetUpperBound(1); j++)
+            {
+                row.Add(source[i, j]);
+            }
+        }
+
+        return returnedList;
+    }
 }
