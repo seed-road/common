@@ -30,6 +30,10 @@ public class ExceptionHandler
     {
         var httpErrorService = context.RequestServices.GetRequiredService<IHttpErrorService>();
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+        
+        if (exceptionHandlerPathFeature is null)
+            throw new NullReferenceException($"{nameof(IExceptionHandlerPathFeature)} is null");
+        
         (var httpCode, HttpError httpError) =
             httpErrorService.ToHttpErrorWrapper(exceptionHandlerPathFeature.Error, exceptionHandlerPathFeature.Path);
         context.Response.StatusCode = httpCode;

@@ -1,6 +1,6 @@
 {
   "name": "@sbailleul/front-end-common",
-  "version": "1.2.3",
+  "version": "1.4.21",
   "description": "Seed road front end common project",
   "main": "dist/index.umd.min.js",
   "module": "dist/index.es.js",
@@ -9,15 +9,20 @@
     "dist"
   ],
   "peerDependencies": {
-    "yup": "^0.32.11",
-    "lodash": "^4.17.21",
+    "@mui/material": "^5.5.1",
+    "@reduxjs/toolkit": "^1.8.1",
+    "@types/react": "^16.14.24",
+    "@types/react-redux": "^7.1.23",
     "axios": "^0.26.1",
-    "@reduxjs/toolkit": "^1.8.1"
+    "lodash": "^4.17.21",
+    "react-redux": "^7.2.6",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",
-    "@types/lodash": "^4.14.179",
     "@rollup/plugin-babel": "^5.3.0",
+    "@types/lodash": "^4.14.179",
+    "@types/uuid": "^8.3.4",
     "rollup": "^2.44.0",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.30.0",
@@ -33,6 +38,7 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "uuid": "^8.3.2"
   }
 }

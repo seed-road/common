@@ -18,6 +18,7 @@ public static class ObjectExtensions
     public static IDictionary<string, T> ToDictionary<T>(this object? source)
     {
         var dictionary = new Dictionary<string, T>();
+        if (source is null) return dictionary;
         foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(source))
         {
             AddPropertyToDictionary(property, source, dictionary);

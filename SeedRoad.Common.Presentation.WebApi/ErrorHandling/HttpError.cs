@@ -4,10 +4,6 @@ namespace SeedRoad.Common.Presentation.WebApi.ErrorHandling;
 
 public class HttpError
 {
-    public HttpError()
-    {
-    }
-
     public HttpError(string url, IEnumerable<Error<object, object>> errors)
     {
         Url = url;

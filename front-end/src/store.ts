@@ -1,4 +1,13 @@
-﻿import {Action, AsyncThunk, AsyncThunkPayloadCreator, createAsyncThunk, ThunkAction} from "@reduxjs/toolkit";
+﻿import {
+    Action,
+    AsyncThunk,
+    AsyncThunkPayloadCreator,
+    configureStore,
+    createAsyncThunk,
+    ThunkAction
+} from "@reduxjs/toolkit";
+
+
 
 export type AppThunk<TState, TExtra, ReturnType = void> = ThunkAction<ReturnType,
     TState,
@@ -23,3 +32,4 @@ export function createRejectAppAsyncThunk<TState, TExtra, Returned, ThunkArg, Re
     };
     return createAppAsyncThunk<TState, TExtra, Returned, ThunkArg, Rejected>(typePrefix, errorWrapper);
 }
+

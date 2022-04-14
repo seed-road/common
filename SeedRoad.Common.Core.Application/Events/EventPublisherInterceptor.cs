@@ -25,14 +25,15 @@ public class EventPublisherInterceptor : AsyncInterceptorBase
         {
             return;
         }
-        var dto = invocation.Arguments.First() as IAggregateDto;
-        foreach (IDomainEvent aggregateEvent in dto.Events.ToList())
+
+        if (invocation.Arguments.First() is not IAggregateDto dto) return;
+
+        foreach (var aggregateEvent in dto.Events?.ToList() ?? Enumerable.Empty<IDomainEvent>())
         {
             _logger.LogInformation("Send aggregate event  {AggregateEvent}", aggregateEvent.ToString());
             var notification = aggregateEvent.ToGenericType(typeof(DomainEventNotification<>));
             _serviceProvider.FireNotificationAndForget(notification, _logger);
         }
-
         dto.ClearEvents();
     }
 
@@ -58,14 +59,16 @@ public class EventPublisherInterceptor : AsyncInterceptorBase
         return methodInfo.Name == nameof(IAggregateRepository<object, IAggregateDto, object>.SetAsync);
     }
 
-    protected override async Task InterceptAsync(IInvocation invocation, IInvocationProceedInfo proceedInfo, Func<IInvocation, IInvocationProceedInfo, Task> proceed)
+    protected override async Task InterceptAsync(IInvocation invocation, IInvocationProceedInfo proceedInfo,
+        Func<IInvocation, IInvocationProceedInfo, Task> proceed)
     {
         ValidateAggregateRepository(invocation);
         await proceed(invocation, proceedInfo);
         PublishEvents(invocation);
     }
 
-    protected override async Task<TResult> InterceptAsync<TResult>(IInvocation invocation, IInvocationProceedInfo proceedInfo, Func<IInvocation, IInvocationProceedInfo, Task<TResult>> proceed)
+    protected override async Task<TResult> InterceptAsync<TResult>(IInvocation invocation,
+        IInvocationProceedInfo proceedInfo, Func<IInvocation, IInvocationProceedInfo, Task<TResult>> proceed)
     {
         ValidateAggregateRepository(invocation);
         TResult result = await proceed(invocation, proceedInfo);
