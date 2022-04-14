@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using SeedRoad.Common.Configuration;
 using SeedRoad.Common.Core.Domain.Emails;
+using SeedRoad.Common.Infrastructure.Mail.Configuration;
 using SeedRoad.Common.Infrastructure.Mail.Services;
-using SeedRoad.IdentityManagement.Infrastructure.Mail.Configuration;
 
 namespace SeedRoad.Common.Infrastructure.Mail;
 

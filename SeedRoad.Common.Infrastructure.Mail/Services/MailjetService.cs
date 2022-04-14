@@ -3,7 +3,7 @@ using Mailjet.Client.TransactionalEmails;
 using Mailjet.Client.TransactionalEmails.Response;
 using Microsoft.Extensions.Logging;
 using SeedRoad.Common.Core.Domain.Emails;
-using SeedRoad.IdentityManagement.Infrastructure.Mail.Configuration;
+using SeedRoad.Common.Infrastructure.Mail.Configuration;
 
 namespace SeedRoad.Common.Infrastructure.Mail.Services;
 
