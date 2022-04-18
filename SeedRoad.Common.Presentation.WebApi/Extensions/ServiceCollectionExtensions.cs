@@ -24,7 +24,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection.AddSingleton<IHateoasResponseBuilder>(_ => HateoasResponseBuilder.Default());
     }
 
-    public static IServiceCollection AddCommonController(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddCommonControllers(this IServiceCollection serviceCollection)
     {
         serviceCollection.AddControllers(options =>
         {
