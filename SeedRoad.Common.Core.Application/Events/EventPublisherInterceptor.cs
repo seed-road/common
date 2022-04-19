@@ -21,7 +21,7 @@ public class EventPublisherInterceptor : AsyncInterceptorBase
 
     private void PublishEvents(IInvocation invocation)
     {
-        if (!IsSetAsyncMethod(invocation.Method))
+        if (!IsSetAsyncMethod(invocation.Method) && !IsRemoveAsyncMethod(invocation.Method))
         {
             return;
         }
@@ -34,6 +34,7 @@ public class EventPublisherInterceptor : AsyncInterceptorBase
             var notification = aggregateEvent.ToGenericType(typeof(DomainEventNotification<>));
             _serviceProvider.FireNotificationAndForget(notification, _logger);
         }
+
         dto.ClearEvents();
     }
 
@@ -57,6 +58,11 @@ public class EventPublisherInterceptor : AsyncInterceptorBase
     private bool IsSetAsyncMethod(MethodInfo methodInfo)
     {
         return methodInfo.Name == nameof(IAggregateRepository<object, IAggregateDto, object>.SetAsync);
+    }
+
+    private bool IsRemoveAsyncMethod(MethodInfo methodInfo)
+    {
+        return methodInfo.Name == nameof(IAggregateRepository<object, IAggregateDto, object>.RemoveAsync);
     }
 
     protected override async Task InterceptAsync(IInvocation invocation, IInvocationProceedInfo proceedInfo,
