@@ -9,7 +9,7 @@ public static class QueryableExtensions
         IPagination pagination)
     {
         var count = await query.CountAsync();
-        var skip = (pagination.Page - 1) * pagination.Size;
+        var skip = pagination.Page  * pagination.Size;
         var items = await query.Skip(skip).Take(pagination.Size).ToListAsync();
         return new PagedList<T>(items, count, pagination.Page, pagination.Size);
     }

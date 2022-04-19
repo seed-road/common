@@ -8,8 +8,10 @@ public static class EnumerableExtensions
     {
         var itemsList = items.ToList();
         var count = itemsList.Count;
-        var skip = (pagination.Page - 1) * pagination.Size;
+        var skip = pagination.Page * pagination.Size;
         var paginatedItems = itemsList.Skip(skip).Take(pagination.Size).ToList();
         return new PagedList<TItem>(paginatedItems, count, pagination.Page, pagination.Size);
     }
+    
+
 }

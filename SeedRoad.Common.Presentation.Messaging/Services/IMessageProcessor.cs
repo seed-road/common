@@ -2,5 +2,5 @@
 
 public interface IMessageProcessor<TCommand>
 {
-    bool Process(string message);
+    Task<bool> Process(string message);
 }

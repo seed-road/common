@@ -18,7 +18,7 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
             _serviceProvider = serviceProvider;
         }
 
-        public bool Process(string message)
+        public async Task<bool> Process(string message)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
                     return false;
                 }
 
-                sender.Send(runParticipation);
+                await sender.Send(runParticipation);
                 return true;
             }
             catch (Exception ex)

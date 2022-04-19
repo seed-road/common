@@ -73,12 +73,12 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
                     _routingConfiguration.Exchange,
                     _routingConfiguration.RoutingKey);
                 var consumer = new EventingBasicConsumer(_channel);
-                consumer.Received += (model, ea) =>
+                consumer.Received += async (model, ea) =>
                 {
                     var body = ea.Body;
                     var message = Encoding.UTF8.GetString(body.ToArray());
 
-                    var result = _messageProcessor.Process(message);
+                    var result = await _messageProcessor.Process(message);
                     if (result)
                     {
                         _channel.BasicAck(ea.DeliveryTag, false);
