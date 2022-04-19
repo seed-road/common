@@ -23,7 +23,7 @@ namespace SeedRoad.Common.Infrastructure.Messaging.Services
             {
                 throw new InvalidMessageException("Cannot send null message with rabbitmq");
             }
-            _dispatcherService.PushMessage(message, _routingKey, _exchange);
+            _dispatcherService.PushMessage(message, _exchange, _routingKey);
         }
     }
 }
