@@ -14,7 +14,7 @@ public abstract class ApiControllerBase : ControllerBase
     {
         get
         {
-            var subClaim = User.FindFirstValue("sub");
+            var subClaim = User.FindFirstValue("sub") ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(subClaim)) return null;
             return Guid.Parse(subClaim);
         }

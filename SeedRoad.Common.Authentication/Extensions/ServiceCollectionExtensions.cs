@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
@@ -7,11 +9,10 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCommonAuthentication(this IServiceCollection serviceCollection)
     {
-        serviceCollection.AddAuthentication("Bearer")
-            .AddJwtBearer("Bearer", options =>
+        serviceCollection.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
                 options.Authority = "https://localhost:5001";
-
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateAudience = false
