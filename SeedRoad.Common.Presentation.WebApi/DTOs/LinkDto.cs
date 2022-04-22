@@ -13,6 +13,27 @@ public class LinkDto
     public string Rel { get; }
     public string Method { get; }
 
+    public static LinkDto GetLink(string? href, string rel)
+    {
+        return new LinkDto(href, rel, HttpMethod.Get);
+    }
+
+    public static LinkDto PostLink(string? href, string rel)
+    {
+        return new LinkDto(href, rel, HttpMethod.Post);
+    }
+
+    public static LinkDto PutLink(string? href, string rel)
+    {
+        return new LinkDto(href, rel, HttpMethod.Put);
+    }
+
+    public static LinkDto DeleteLink(string? href, string rel)
+    {
+        return new LinkDto(href, rel, HttpMethod.Delete);
+    }
+
+
     public static LinkDto SelfLink(string? href)
     {
         return new LinkDto(href, "self", HttpMethod.Get);

@@ -15,6 +15,8 @@ public static class ServiceCollectionExtensions
         ));
     }
 
+
+    
     public static IServiceCollection AddFileService(this IServiceCollection serviceCollection, string path)
     {
         return serviceCollection.AddScoped<IFileService>(provider => new FileService(

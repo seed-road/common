@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using SeedRoad.Common.Core.Application.Files;
+using SeedRoad.Common.Presentation.WebApi.Http;
 
 namespace SeedRoad.Common.Presentation.WebApi;
 
@@ -18,5 +20,14 @@ public abstract class ApiControllerBase : ControllerBase
             if (string.IsNullOrEmpty(subClaim)) return null;
             return Guid.Parse(subClaim);
         }
+    }
+
+    protected FileStreamResult GetFileStreamResult(FileView fileView)
+    {
+        fileView.Content.Seek(0, SeekOrigin.Begin);
+        return new FileStreamResult(fileView.Content, MimeHelper.GetMimeType(fileView.Extension))
+        {
+            FileDownloadName = $"{fileView.Name}{fileView.Extension}"
+        };
     }
 }

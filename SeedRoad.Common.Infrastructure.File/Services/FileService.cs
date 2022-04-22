@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using SeedRoad.Common.Infrastructure.File.Contracts;
+using SeedRoad.Common.Infrastructure.File.Dtos;
 
 namespace SeedRoad.Common.Infrastructure.File.Services;
 
@@ -21,25 +22,71 @@ public class FileService : IFileService
         await content.CopyToAsync(outputFileStream);
     }
 
+    public async Task WriteFileAndRemoveFilesStartingByTheSameNameAsync(string filename, string extension,
+        Stream content)
+    {
+        DeleteFile(filename);
+        await WriteFileAsync(filename, extension, content);
+    }
+
+
     private string GetFilePath(string filename, string extension) =>
-        Path.Combine(_basePath, filename + "." + extension);
+        Path.Combine(_basePath, filename + extension);
 
+    private string? FindFileWithoutExtension(string filename)
+    {
+        return Directory.GetFiles(_basePath).FirstOrDefault(f => Path.GetFileName(f).StartsWith(filename));
+    }
 
-    public Stream LoadFile(string filename, string extension)
+    public async Task<FileResult?> LoadFileAsync(string filename, string extension)
     {
         var filePath = GetFilePath(filename, extension);
-        return new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        if (!global::System.IO.File.Exists(filePath)) return null;
+
+        return await GetFileResultFromFile(filePath);
     }
+
+    private static async Task<FileResult?> GetFileResultFromFile(string filePath)
+    {
+        var memStream = new MemoryStream();
+        await using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+        await fileStream.CopyToAsync(memStream);
+        return new FileResult(
+            memStream,
+            Path.GetExtension(filePath));
+    }
+
+    public async Task<FileResult?> LoadFileAsync(string filenameWithoutExtension)
+    {
+        var filePath = FindFileWithoutExtension(filenameWithoutExtension);
+        if (filePath is null || !global::System.IO.File.Exists(filePath))
+        {
+            return null;
+        }
+        return await GetFileResultFromFile(filePath);
+    }
+
 
     public void DeleteFile(string filename, string extension)
     {
         var filePath = GetFilePath(filename, extension);
-        if (!System.IO.File.Exists(filePath))
+        if (!global::System.IO.File.Exists(filePath))
         {
             return;
         }
 
-        System.IO.File.Delete(filePath);
+        global::System.IO.File.Delete(filePath);
+    }
+
+    public void DeleteFile(string filenameWithoutExtension)
+    {
+        var filePath = FindFileWithoutExtension(filenameWithoutExtension);
+        if (filePath is null || !global::System.IO.File.Exists(filePath))
+        {
+            return;
+        }
+
+        global::System.IO.File.Delete(filePath);
     }
 }
 
