@@ -15,4 +15,8 @@
       <ProjectReference Include="..\SeedRoad.Common.Core.Application\SeedRoad.Common.Core.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Dtos" />
+    </ItemGroup>
+
 </Project>

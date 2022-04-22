@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SeedRoad.Common.Infrastructure.File.Contracts;
+using SeedRoad.Common.Core.Application.Files;
 using SeedRoad.Common.Infrastructure.File.Services;
 
 namespace SeedRoad.Common.Infrastructure.File.Extensions;

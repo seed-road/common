@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
-using SeedRoad.Common.Infrastructure.File.Contracts;
-using SeedRoad.Common.Infrastructure.File.Dtos;
+using SeedRoad.Common.Core.Application.Files;
 
 namespace SeedRoad.Common.Infrastructure.File.Services;
 

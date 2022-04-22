@@ -1,5 +1,4 @@
 using SeedRoad.Common.Core.Application.Files;
-using SeedRoad.Common.Infrastructure.File.Dtos;
 
 namespace SeedRoad.Common.Infrastructure.File.Extensions;
 

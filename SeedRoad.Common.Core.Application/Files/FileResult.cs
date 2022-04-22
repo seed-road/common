@@ -1,4 +1,4 @@
-namespace SeedRoad.Common.Infrastructure.File.Dtos;
+namespace SeedRoad.Common.Core.Application.Files;
 
 public record FileResult(Stream Content, string Extension) : IDisposable
 {
@@ -6,4 +6,6 @@ public record FileResult(Stream Content, string Extension) : IDisposable
     {
         Content.Dispose();
     }
+
+    public FileView To(string fileName) => new(Content, fileName, Extension);
 }

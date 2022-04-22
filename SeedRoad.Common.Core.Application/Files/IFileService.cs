@@ -1,6 +1,4 @@
-using SeedRoad.Common.Infrastructure.File.Dtos;
-
-namespace SeedRoad.Common.Infrastructure.File.Contracts;
+namespace SeedRoad.Common.Core.Application.Files;
 
 public interface IFileService
 {
