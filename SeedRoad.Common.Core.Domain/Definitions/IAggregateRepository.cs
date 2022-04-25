@@ -5,6 +5,8 @@ public interface IAggregateRepository<TId, in TWriteAggregateDto, TReadAggregate
 {
     public Task<TId> SetAsync(TWriteAggregateDto dto);
     public Task<TReadAggregateDto?> FindByIdAsync(TId id);
+    
+    public Task<IEnumerable<TReadAggregateDto>> GetAllAsync();
     public Task RemoveAsync(TWriteAggregateDto dto);
     public Task<TId> NextIdAsync();
 }
