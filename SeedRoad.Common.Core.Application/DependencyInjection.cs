@@ -80,7 +80,8 @@ public static class DependencyInjection
             .AddMediatR(allAssemblies)
             .AddPagination(configuration)
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehavior<,>))
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>))
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(FormatValidationBehavior<,>))
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(PaginationBehavior<,>))
             .AddScoped<IExceptionsAggregate, ExceptionsAggregate>()
             .AddSingleton(new ProxyGenerator());
@@ -105,4 +106,6 @@ public static class DependencyInjection
             configuration.GetConfiguration<PaginationConfiguration>() ?? new PaginationConfiguration();
         return serviceCollection.AddSingleton(paginationConfiguration);
     }
+
+
 }
