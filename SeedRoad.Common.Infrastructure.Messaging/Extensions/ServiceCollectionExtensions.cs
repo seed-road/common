@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SeedRoad.Common.Core.Application.Events;
 using SeedRoad.Common.Core.Domain.Events;
 using SeedRoad.Common.Infrastructure.Messaging.Services;
 using SeedRoad.Common.Messaging.Configurations;
@@ -14,12 +15,21 @@ public static class ServiceCollectionExtensions
             .AddScoped<IDispatcherService, DispatcherService>();
     }
 
-    public static IServiceCollection AddCommonDispatcher<TMessage>(this IServiceCollection serviceCollection, RoutingConfiguration routingConfiguration)
+    public static IServiceCollection AddCommonDispatcher<TMessage>(this IServiceCollection serviceCollection,
+        RoutingConfiguration routingConfiguration)
     {
         return serviceCollection.AddScoped<IEventDispatcher<TMessage>>(provider =>
         {
             var dispatcherService = provider.GetRequiredService<IDispatcherService>();
             return new EventDispatcher<TMessage>(dispatcherService, routingConfiguration);
         });
+    }
+
+    public static IServiceCollection AddEventForward<TMessage>(this IServiceCollection serviceCollection,
+        RoutingConfiguration routingConfiguration) where TMessage : IDomainEvent
+    {
+        return serviceCollection
+            .AddCommonDispatcher<TMessage>(routingConfiguration)
+            .AddScoped(typeof(ForwardEvent<>).MakeGenericType(typeof(TMessage)));
     }
 }

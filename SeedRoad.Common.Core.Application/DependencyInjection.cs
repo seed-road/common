@@ -5,11 +5,13 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using SeedRoad.Common.Configuration;
 using SeedRoad.Common.Core.Application.Events;
 using SeedRoad.Common.Core.Application.ExceptionsHandling;
 using SeedRoad.Common.Core.Application.Pagination;
 using SeedRoad.Common.Core.Application.Validation;
+using SeedRoad.Common.Core.Domain.Events;
 using SeedRoad.Common.Core.Domain.Exceptions;
 using SeedRoad.Common.System;
 
@@ -74,6 +76,7 @@ public static class DependencyInjection
         params Assembly[] assemblies)
     {
         var allAssemblies = assemblies.WithCallingAssembly();
+        
         return serviceCollection
             .AddValidatorsFromAssemblies(allAssemblies)
             .AddScoped<IAsyncInterceptor, EventPublisherInterceptor>()
@@ -86,7 +89,7 @@ public static class DependencyInjection
             .AddScoped<IExceptionsAggregate, ExceptionsAggregate>()
             .AddSingleton(new ProxyGenerator());
     }
-
+    
 
     private static IServiceCollection AddValidatorsFromAssemblies(this IServiceCollection serviceCollection,
         IEnumerable<Assembly> assemblies)
@@ -106,6 +109,4 @@ public static class DependencyInjection
             configuration.GetConfiguration<PaginationConfiguration>() ?? new PaginationConfiguration();
         return serviceCollection.AddSingleton(paginationConfiguration);
     }
-
-
 }

@@ -31,7 +31,7 @@ public class EventPublisherInterceptor : AsyncInterceptorBase
         foreach (var aggregateEvent in dto.Events?.ToList() ?? Enumerable.Empty<IDomainEvent>())
         {
             _logger.LogInformation("Send aggregate event  {AggregateEvent}", aggregateEvent.ToString());
-            var notification = aggregateEvent.ToGenericType(typeof(DomainEventNotification<>));
+            var notification = aggregateEvent.ToGenericTypeInstance(typeof(DomainEventNotification<>));
             _serviceProvider.FireNotificationAndForget(notification, _logger);
         }
 

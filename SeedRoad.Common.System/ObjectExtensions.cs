@@ -4,7 +4,7 @@ namespace SeedRoad.Common.System;
 
 public static class ObjectExtensions
 {
-    public static object? ToGenericType(this object obj, Type parentType)
+    public static object? ToGenericTypeInstance(this object obj, Type parentType)
     {
         Type genericDispatcherType = parentType.MakeGenericType(obj.GetType());
         return Activator.CreateInstance(genericDispatcherType, obj);

@@ -25,6 +25,12 @@ public static class AssembliesExtensions
         return assembliesSet.ToArray();
     }
 
+    public static Type[] GetAllTypes(this IEnumerable<Assembly> assemblies)
+    {
+        return assemblies.SelectMany(assembly => assembly.GetTypes()).ToArray();
+    }
+
+
     private static Assembly? GetAssembly(int stackTraceLevel)
     {
         var stackTrace = new StackTrace();

@@ -39,7 +39,7 @@ public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior
             foreach (var innerException in _exceptionsAggregate)
             {
                 var exceptionNotification = innerException is IDomainException
-                    ? innerException.ToGenericType(typeof(ExceptionNotification<>))
+                    ? innerException.ToGenericTypeInstance(typeof(ExceptionNotification<>))
                     : new ExceptionNotification<UnhandledException>(new UnhandledException(innerException));
                 _provider.FireNotificationAndForget(exceptionNotification, _logger);
             }
