@@ -4,7 +4,8 @@ public interface IEntityId
 {
 }
 
-public interface IEntityId<out T> : IEntityId
+public interface IEntityId<T> : IEntityId
 {
-    public T Value { get; }
+    public T Value { get;  }
+    
 }
