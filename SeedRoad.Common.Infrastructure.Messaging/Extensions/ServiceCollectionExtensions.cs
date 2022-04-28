@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using SeedRoad.Common.Core.Application.Events;
 using SeedRoad.Common.Core.Domain.Events;
 using SeedRoad.Common.Infrastructure.Messaging.Services;
@@ -28,8 +29,9 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddEventForward<TMessage>(this IServiceCollection serviceCollection,
         RoutingConfiguration routingConfiguration) where TMessage : IDomainEvent
     {
+        var eventForwardType = typeof(ForwardEvent<>).MakeGenericType(typeof(TMessage));
         return serviceCollection
             .AddCommonDispatcher<TMessage>(routingConfiguration)
-            .AddScoped(typeof(ForwardEvent<>).MakeGenericType(typeof(TMessage)));
+            .AddScoped(typeof(INotificationHandler<DomainEventNotification<TMessage>>), eventForwardType);
     }
 }
