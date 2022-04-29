@@ -75,12 +75,10 @@ public static class DependencyInjection
         IConfiguration configuration,
         params Assembly[] assemblies)
     {
-        var allAssemblies = assemblies.WithCallingAssembly();
-        
         return serviceCollection
-            .AddValidatorsFromAssemblies(allAssemblies)
+            .AddValidatorsFromAssemblies(assemblies)
             .AddScoped<IAsyncInterceptor, EventPublisherInterceptor>()
-            .AddMediatR(allAssemblies)
+            .AddMediatR(assemblies)
             .AddPagination(configuration)
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(FormatValidationBehavior<,>))

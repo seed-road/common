@@ -1,5 +1,6 @@
 using System.Reflection;
 using Castle.DynamicProxy;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SeedRoad.Common.Core.Application.Extensions;
 using SeedRoad.Common.Core.Domain.Definitions;
@@ -10,12 +11,12 @@ namespace SeedRoad.Common.Core.Application.Events;
 
 public class EventPublisherInterceptor : AsyncInterceptorBase
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<EventPublisherInterceptor> _logger;
 
-    public EventPublisherInterceptor(IServiceProvider serviceProvider, ILogger<EventPublisherInterceptor> logger)
+    public EventPublisherInterceptor(IServiceScopeFactory scopeFactory, ILogger<EventPublisherInterceptor> logger)
     {
-        _serviceProvider = serviceProvider;
+        _scopeFactory = scopeFactory;
         _logger = logger;
     }
 
@@ -32,7 +33,7 @@ public class EventPublisherInterceptor : AsyncInterceptorBase
         {
             _logger.LogInformation("Send aggregate event  {AggregateEvent}", aggregateEvent.ToString());
             var notification = aggregateEvent.ToGenericTypeInstance(typeof(DomainEventNotification<>));
-            _serviceProvider.FireNotificationAndForget(notification, _logger);
+            _scopeFactory.FireNotificationAndForget(notification, _logger);
         }
 
         dto.ClearEvents();

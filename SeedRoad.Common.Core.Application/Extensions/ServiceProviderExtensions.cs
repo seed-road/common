@@ -6,7 +6,7 @@ namespace SeedRoad.Common.Core.Application.Extensions;
 
 public static class ServiceProviderExtensions
 {
-    public static void FireNotificationAndForget<T>(this IServiceProvider serviceProvider, T notification,
+    public static void FireNotificationAndForget<T>(this IServiceScopeFactory scopeFactory, T notification,
         ILogger? logger = null)
     {
         if (notification is null) throw new ArgumentNullException(nameof(notification));
@@ -14,7 +14,7 @@ public static class ServiceProviderExtensions
         {
             try
             {
-                using var scope = serviceProvider.CreateScope();
+                using var scope = scopeFactory.CreateScope();
                 var publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
                 await publisher.Publish(notification, default);
             }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SeedRoad.Common.Core.Application.Exceptions;
 using SeedRoad.Common.Core.Application.Extensions;
@@ -11,14 +12,14 @@ namespace SeedRoad.Common.Core.Application.ExceptionsHandling;
 public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull, IRequest<TResponse>
 {
-    private readonly IServiceProvider _provider;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger<UnhandledExceptionBehavior<TRequest, TResponse>> _logger;
     private readonly IExceptionsAggregate _exceptionsAggregate;
 
-    public UnhandledExceptionBehavior(IServiceProvider provider,
+    public UnhandledExceptionBehavior(IServiceScopeFactory scopeFactory,
         ILogger<UnhandledExceptionBehavior<TRequest, TResponse>> logger, IExceptionsAggregate exceptionsAggregate)
     {
-        _provider = provider;
+        _scopeFactory = scopeFactory;
         _logger = logger;
         _exceptionsAggregate = exceptionsAggregate;
     }
@@ -41,7 +42,7 @@ public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior
                 var exceptionNotification = innerException is IDomainException
                     ? innerException.ToGenericTypeInstance(typeof(ExceptionNotification<>))
                     : new ExceptionNotification<UnhandledException>(new UnhandledException(innerException));
-                _provider.FireNotificationAndForget(exceptionNotification, _logger);
+                _scopeFactory.FireNotificationAndForget(exceptionNotification, _logger);
             }
             throw _exceptionsAggregate.AggregatedException;
         }
