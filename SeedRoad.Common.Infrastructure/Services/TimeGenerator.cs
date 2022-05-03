@@ -8,4 +8,5 @@ public class TimeGenerator : ITimeGenerator
     {
         return DateTime.Now;
     }
+
 }
