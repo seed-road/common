@@ -1,7 +1,7 @@
-﻿import axios, {AxiosError, AxiosRequestConfig} from "axios";
+﻿import axios, {AxiosError, AxiosInstance, AxiosRequestConfig} from "axios";
 import {HttpError, isHttpErrorResponse} from "../errors/HttpError";
 
-export const preconfiguredAxios = (config?: AxiosRequestConfig) => {
+export const preconfiguredAxios = (config?: AxiosRequestConfig): AxiosInstance => {
     const axiosInstance = axios.create({...config, withCredentials: true});
     axiosInstance.interceptors.response.use(response => response, (error: AxiosError) => {
         if (!!error.response?.data && isHttpErrorResponse(error.response.data)) {
@@ -15,3 +15,11 @@ export const preconfiguredAxios = (config?: AxiosRequestConfig) => {
     })
     return axiosInstance;
 };
+
+
+export const preconfiguredBffAxios = (config?: AxiosRequestConfig): AxiosInstance => preconfiguredAxios({
+    ...config,
+    headers: {
+        'X-CSRF': '1'
+    }
+});
