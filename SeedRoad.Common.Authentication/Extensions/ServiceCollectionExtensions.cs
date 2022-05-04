@@ -2,17 +2,18 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SeedRoad.Common.Authentication.Configuration;
 
 namespace SeedRoad.Common.Authentication.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCommonAuthentication(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddCommonAuthentication(this IServiceCollection serviceCollection, AuthConfiguration authConfiguration)
     {
         serviceCollection.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = "https://localhost:5001";
+                options.Authority = authConfiguration.Authority;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateAudience = false
