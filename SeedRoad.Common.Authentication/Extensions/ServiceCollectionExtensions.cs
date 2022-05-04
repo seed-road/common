@@ -14,8 +14,10 @@ public static class ServiceCollectionExtensions
             .AddJwtBearer(options =>
             {
                 options.Authority = authConfiguration.Authority;
+                options.RequireHttpsMetadata = authConfiguration.RequireHttpsMetadata;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    ValidIssuer = authConfiguration.ValidIssuer,
                     ValidateAudience = false
                 };
             });
