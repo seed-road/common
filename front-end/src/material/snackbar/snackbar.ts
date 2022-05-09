@@ -60,7 +60,7 @@ export function defaultAlert(text: string, config?: Partial<CustomAlertProps>): 
 
 export function defaultSnackBarProps(config?: Partial<SnackbarProps>): SnackbarProps {
     return {
-        autoHideDuration: 5000,
+        autoHideDuration: 2000,
         open: true,
         ...config
     }
