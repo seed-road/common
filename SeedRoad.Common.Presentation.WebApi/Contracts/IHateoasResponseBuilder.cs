@@ -6,9 +6,11 @@ namespace SeedRoad.Common.Presentation.WebApi.Contracts;
 
 public interface IHateoasResponseBuilder
 {
-
-
     HateoasResponse<T> ToEntityResponse<T>(T entity, IEnumerable<LinkDto> entityLinks);
+
+    Response<IEnumerable<HateoasResponse<T>>> FromEntities<T>(IEnumerable<HateoasResponse<T>> entities) =>
+        new(entities);
+
 
     HateoasPageResponse<T> FromPagedList<T>(IUrlHelper urlHelper, IPagedList<T> page,
         IEnumerable<T> values,
@@ -16,11 +18,9 @@ public interface IHateoasResponseBuilder
 
     HateoasPageResponse<T> FromPagedList<T>(IUrlHelper urlHelper, IPagedList<T> page,
         string routeName, IDictionary<string, object>? routeValues = null);
-    
+
 
     HateoasPageResponse<T> FromPagedList<T>(IUrlHelper urlHelper, PagedListResume resume,
         IEnumerable<T> values,
         string routeName, object? routeValues = null);
-
-
 }

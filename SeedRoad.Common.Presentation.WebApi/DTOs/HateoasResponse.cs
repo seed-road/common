@@ -1,8 +1,8 @@
 ﻿namespace SeedRoad.Common.Presentation.WebApi.DTOs;
 
-public class HateoasResponse<TResult>
+public class HateoasResponse<TResult>: Response<TResult>
 {
-    public HateoasResponse(TResult result, IList<LinkDto> links)
+    public HateoasResponse(TResult result, IList<LinkDto> links): base(result)
     {
         Result = result;
         Links = links;

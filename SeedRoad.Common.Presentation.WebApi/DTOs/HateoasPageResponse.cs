@@ -9,3 +9,4 @@ public class HateoasPageResponse<T> : HateoasResponse<IList<T>>
 
     public long Total { get; set; }
 }
+
