@@ -28,10 +28,10 @@ public static class ServiceCollectionExtensions
     {
         return serviceCollection.AddAuthorization(options =>
         {
-            options.AddPolicy("ApiScope", policy =>
+            options.AddPolicy(AuthenticationConstants.Profile, policy =>
             {
                 policy.RequireAuthenticatedUser();
-                policy.RequireClaim("scope", "api1");
+                policy.RequireClaim("scope", AuthenticationConstants.Scope);
             });
         });
     }
