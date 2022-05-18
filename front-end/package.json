@@ -1,6 +1,6 @@
 {
   "name": "@sbailleul/front-end-common",
-  "version": "1.5.4",
+  "version": "1.5.6",
   "description": "Seed road front end common project",
   "main": "dist/index.umd.min.js",
   "module": "dist/index.es.js",
@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.8.1",
     "@types/react": "^17.0.0",
     "@types/react-redux": "^7.1.23",
+    "formik": "^2.2.9",
     "axios": "^0.26.1",
     "lodash": "^4.17.21",
     "react-redux": "^7.2.6",
