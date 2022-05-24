@@ -35,6 +35,20 @@ public static class ArrayExtensions
         return returnedList;
     }
 
+    public static ISet<T> GetUniques<T>(this T[,] source)
+    {
+        var set =  new HashSet<T>();
+        for (var i = 0; i <= source.GetUpperBound(0); i++)
+        {
+            for (var j = 0; j <= source.GetUpperBound(1); j++)
+            {
+                set.Add(source[i, j]);
+            }
+        }
+
+        return set;
+    }
+
     public static Boolean Contains<T>(this T[,] source, T element)
     {
         if (element == null) return false;
