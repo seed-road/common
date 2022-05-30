@@ -100,6 +100,11 @@ public static class ArrayExtensions
 
         return set;
     }
+    
+    public static T GetAt<T>(this T[,] source, Index index)
+    {
+        return source[index.Y, index.X];
+    }
 
     public static Boolean Contains<T>(this T[,] source, T element)
     {
