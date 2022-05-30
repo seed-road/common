@@ -2,6 +2,34 @@ namespace SeedRoad.Common.System;
 
 public static class ArrayExtensions
 {
+    public record Index(int X, int Y)
+    {
+        public IEnumerable<ArrayExtensions.Index> GetNeighbors()
+        {
+            return new[]
+            {
+                new Index(X, Y - 1),
+                new Index(X, Y + 1),
+                
+                new Index(X - 1, Y - 1),
+                new Index(X - 1, Y),
+                new Index(X - 1, Y + 1),
+                
+                new Index(X + 1, Y - 1),
+                new Index(X + 1, Y),
+                new Index(X + 1, Y + 1),
+            };
+        }
+    }
+
+    public static bool IsIn<T>(this T[,] source, Index index)
+    {
+        if (index.X > source.GetUpperBound(1) || index.X < 0) return false;
+        if (index.Y > source.GetUpperBound(0) || index.Y < 0) return false;
+
+        return true;
+    }
+    
     public static TDestination[,] Map<TSource, TDestination>(this TSource[,] source, Func<TSource, TDestination> mapper)
     {
         var rows = source.GetLength(0);
@@ -17,6 +45,30 @@ public static class ArrayExtensions
         }
 
         return destination;
+    }
+
+    public static void ForEach<T>(this T[,] source, Action<T> callback)
+    {
+        
+        for (var i = 0; i <= source.GetUpperBound(0); i++)
+        {
+            for (var j = 0; j <= source.GetUpperBound(1); j++)
+            {
+                callback(source[i, j]);
+            }
+        }
+    }
+    
+    public static void ForEach<T>(this T[,] source, Action<T, Index> callback)
+    {
+        
+        for (var i = 0; i <= source.GetUpperBound(0); i++)
+        {
+            for (var j = 0; j <= source.GetUpperBound(1); j++)
+            {
+                callback(source[i, j], new Index(j, i));
+            }
+        }
     }
 
     public static List<List<T>> ToListOfList<T>(this T[,] source)
