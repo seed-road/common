@@ -1,6 +1,6 @@
 ﻿namespace SeedRoad.Common.Messaging.Configurations;
 
-public class CreateUpdateDeleteExchange : IExchange
+public class CreateUpdateDeleteExchange : IExchange, ICreateExchange, IUpdateExchange, IDeleteExchange
 {
     public string Name { get; set; } = null!;
     public string CreatedRoutingKey { get; set; } = null!;
