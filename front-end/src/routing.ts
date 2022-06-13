@@ -6,4 +6,5 @@ export const getRoute = (...path: string[]) => {
 export const getAbsoluteUrlByWindow = (path: string) => getAbsoluteUrl(window.location.protocol, window.location.hostname, path, parseInt(window.location.port, 10))
 
 export const getAbsoluteUrl = (protocol: string, hostname: string, path: string, port: number = 80) =>
-    `${protocol}//${hostname}:${port}/${_.trimStart(path, '/')}`;
+    `${protocol}//${hostname}${isNaN(port) ? "" : `:${port}`}/${_.trimStart(path, '/')}`;
+ 
