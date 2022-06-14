@@ -3,7 +3,7 @@
 public interface IRabbitMqConfiguration
 {
     string Host { get;  }
-    string Username { get;  }
-    string Password { get;  }
+    string? Username { get;  }
+    string? Password { get;  }
     int Port { get;  }
 }

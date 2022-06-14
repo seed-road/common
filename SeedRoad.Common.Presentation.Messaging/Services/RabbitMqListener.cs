@@ -31,8 +31,11 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
                     configuration.Host, configuration.Password, configuration.Username, configuration.Port);
                 var factory = new ConnectionFactory
                 {
+                    Password = configuration.Password,
+                    UserName = configuration.Username,
                     HostName = configuration.Host
                 };
+
                 _connection = factory.CreateConnection();
                 _channel = _connection.CreateModel();
             }

@@ -21,7 +21,9 @@ namespace SeedRoad.Common.Infrastructure.Messaging.Services
             {
                 var factory = new ConnectionFactory
                 {
-                    HostName = configuration.Host
+                    HostName = configuration.Host,
+                    UserName = configuration.Username,
+                    Password = configuration.Password
                 };
                 var connection = factory.CreateConnection();
                 _channel = connection.CreateModel();
@@ -30,7 +32,6 @@ namespace SeedRoad.Common.Infrastructure.Messaging.Services
             {
                 logger.LogError(-1, ex, "RabbitMQClient init fail");
             }
-
         }
 
         public void PushMessage(object message, string exchange, string routingKey)
