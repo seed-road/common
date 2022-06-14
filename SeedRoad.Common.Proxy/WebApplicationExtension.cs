@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.Extensions.Logging;
 using SeedRoad.Common.Proxy.Configuration;
 
 namespace SeedRoad.Common.Proxy;
