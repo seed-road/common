@@ -10,15 +10,8 @@ public static class WebApplicationExtension
 
     public static WebApplication UseProxy(this WebApplication app, ProxyConfiguration proxyConfiguration)
     {
-        if (proxyConfiguration.LoggedHeaders is not null)
-        {
-            foreach (var proxyConfigurationLoggedHeader in proxyConfiguration.LoggedHeaders)
-            {
-                app.Logger.LogInformation("HEADER : {Header}", proxyConfigurationLoggedHeader);
-            }
-        }
+
         app.UseForwardedHeaders();
-        app.UseHttpLogging();
         app.UseHttpsRedirection();
         if (proxyConfiguration.LoggedHeaders is not null)
         {
