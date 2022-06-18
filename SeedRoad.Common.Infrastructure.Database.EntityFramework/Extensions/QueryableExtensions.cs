@@ -6,6 +6,13 @@ namespace SeedRoad.Common.Infrastructure.Database.EntityFramework.Extensions;
 
 public static class QueryableExtensions
 {
+    public static async Task<PagedList<TItem>> ToPagedListAsync<TItem>(this IQueryable<TItem> items)
+    {
+        var itemsList = await items.ToListAsync();
+        var count = itemsList.Count;
+        return new PagedList<TItem>(itemsList, count, 0, count);
+    }
+
     public static async Task<PagedList<T>> FromPaginationQueryAsync<T>(this IQueryable<T> query,
         IPagination pagination)
     {
@@ -42,7 +49,7 @@ public static class QueryableExtensions
     {
         if (!orderByExpressions.Any())
         {
-            return query;   
+            return query;
         }
 
         var i = Array.FindIndex(orderByExpressions, o => o.Order != null);
