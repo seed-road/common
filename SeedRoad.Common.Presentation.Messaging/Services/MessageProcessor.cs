@@ -32,6 +32,8 @@ namespace SeedRoad.Common.Presentation.Messaging.Services
                     return false;
                 }
 
+                _logger.LogInformation("Process  message {Message}", message);
+
                 await sender.Send(runParticipation);
                 return true;
             }
