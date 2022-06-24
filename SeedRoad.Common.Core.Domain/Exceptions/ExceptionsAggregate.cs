@@ -84,4 +84,10 @@ public class ExceptionsAggregate : Exception, IExceptionsAggregate
         get => Exceptions[index];
         set => Exceptions[index] = value;
     }
+
+
+    public override string ToString()
+    {
+        return string.Join("\n", Exceptions.Select(e => e.ToString()));
+    }
 }
