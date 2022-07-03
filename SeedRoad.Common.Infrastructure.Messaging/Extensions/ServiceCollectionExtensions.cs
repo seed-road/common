@@ -34,4 +34,13 @@ public static class ServiceCollectionExtensions
             .AddCommonDispatcher<TMessage>(routingConfiguration)
             .AddScoped(typeof(INotificationHandler<DomainEventNotification<TMessage>>), eventForwardType);
     }
+    
+    public static IServiceCollection AddBatchEventForward<TMessage>(this IServiceCollection serviceCollection,
+        RoutingConfiguration routingConfiguration) where TMessage : IDomainEvent
+    {
+        var eventForwardType = typeof(ForwardBatchEvent<>).MakeGenericType(typeof(TMessage));
+        return serviceCollection
+            .AddCommonDispatcher<TMessage>(routingConfiguration)
+            .AddScoped(typeof(INotificationHandler<DomainEventNotification<BatchDomainEvent<TMessage>>>), eventForwardType);
+    }
 }
